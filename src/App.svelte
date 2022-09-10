@@ -1,17 +1,24 @@
 <script lang="ts">
+  import { open, save } from "@tauri-apps/api/dialog";
+  import {
+    readTextFile,
+    writeBinaryFile,
+    writeTextFile,
+  } from "@tauri-apps/api/fs";
   import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
   import "bpmn-js/dist/assets/diagram-js.css";
   import BpmnModeler from "bpmn-js/lib/Modeler";
+  import { Canvg, presets } from "canvg";
   import { onDestroy, onMount } from "svelte";
-  import { open, save } from "@tauri-apps/api/dialog";
-  import { readTextFile, writeTextFile } from "@tauri-apps/api/fs";
 
   let container;
   let modeler;
+  let canvas;
 
   onMount(async () => {
     modeler = new BpmnModeler({
       container: container,
+      // FIXME check keyboard bindings
       // keyboard: { bindInfo: document }
     });
     modeler.createDiagram();
@@ -39,9 +46,21 @@
 
   async function savePNG() {
     try {
-      const { svg } = await modeler.saveSVG();
-      // FIXME save to file
-      // FIXME handle PNG conversion
+      const filePath = await save({
+        filters: [{ name: "PNG", extensions: ["png"] }],
+      });
+      if (filePath !== null) {
+        const { svg } = await modeler.saveSVG();
+
+        const ctx = canvas.getContext("2d");
+        const v = await Canvg.from(ctx, svg, presets.offscreen());
+        await v.render();
+
+        canvas.toBlob(async (blob) => {
+          const content = await blob.arrayBuffer();
+          await writeBinaryFile(filePath, content);
+        });
+      }
     } catch (err) {
       // FIXME error handling
       console.error(err);
@@ -54,7 +73,7 @@
         multiple: false,
         filters: [
           {
-            name: "WHatIsIt",
+            name: "Model",
             extensions: ["bpmn", "xml"],
           },
         ],
@@ -78,10 +97,10 @@
   </div>
   <div class="modeler" bind:this={container} />
 </main>
+<canvas bind:this={canvas} />
 
 <style>
   .toolbar {
-    background-color: aquamarine;
     display: flex;
     flex-direction: row-reverse;
     position: absolute;

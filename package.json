@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^1.0.2",
-    "bpmn-js": "^9.4.1"
+    "bpmn-js": "^9.4.1",
+    "canvg": "^4.0.1"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.1",
