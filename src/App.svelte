@@ -5,13 +5,14 @@
     writeBinaryFile,
     writeTextFile,
   } from "@tauri-apps/api/fs";
+  import { appWindow } from "@tauri-apps/api/window";
   import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
   import "bpmn-js/dist/assets/diagram-js.css";
   import BpmnModeler from "bpmn-js/lib/Modeler";
   import { Canvg, presets } from "canvg";
   import { onDestroy, onMount } from "svelte";
-  import { appWindow } from "@tauri-apps/api/window";
-  import { getName } from "@tauri-apps/api/app";
+  import Error from "./lib/Error.svelte";
+  import { errorMessage } from "./store";
 
   const appTitle = "BPMN Modeler";
   let container;
@@ -47,9 +48,9 @@
     try {
       const { xml } = await modeler.saveXML({ format: true });
       await writeTextFile(filePath, xml);
-      // FIXME success dialog
     } catch (err) {
-      // FIXME error handling
+      console.log(err);
+      errorMessage.update((m) => err);
     }
   }
 
@@ -71,8 +72,8 @@
         await setLoadedFilePath(filePath);
       }
     } catch (err) {
-      // FIXME error handling
-      console.error(err);
+      console.log(err);
+      errorMessage.update((m) => err);
     }
   }
 
@@ -94,8 +95,8 @@
         });
       }
     } catch (err) {
-      // FIXME error handling
-      console.error(err);
+      console.log(err);
+      errorMessage.update((m) => err);
     }
   }
 
@@ -116,8 +117,8 @@
         await setLoadedFilePath(filePath as string);
       }
     } catch (err) {
-      // FIXME error handling
       console.log(err);
+      errorMessage.update((m) => err);
     }
   }
 
@@ -135,6 +136,7 @@
     <button on:click|stopPropagation|preventDefault={savePNG}>PNG</button>
     <button on:click|stopPropagation|preventDefault={newDiagram}>New</button>
   </div>
+  <Error />
   <div class="modeler" bind:this={container} />
 </main>
 <canvas bind:this={canvas} />
