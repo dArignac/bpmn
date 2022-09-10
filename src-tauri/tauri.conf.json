@@ -12,7 +12,21 @@
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "dialog": {
+        "all": true
+      },
+      "fs": {
+        "all": false,
+        "copyFile": false,
+        "createDir": false,
+        "readDir": true,
+        "readFile": true,
+        "removeDir": false,
+        "removeFile": false,
+        "renameFile": false,
+        "scope": [],
+        "writeFile": true
+      }
     },
     "bundle": {
       "active": true,
@@ -29,7 +43,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "one.arkenstout.bpmn",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -56,10 +70,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 1200,
         "resizable": true,
         "title": "bpmn-modeler",
-        "width": 800
+        "width": 1000
       }
     ]
   }
