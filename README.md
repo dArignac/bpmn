@@ -1,7 +1,8 @@
-# Tauri + Svelte + Typescript
+# BPMN Modeler
 
-This template should help get you started developing with Tauri, Svelte and TypeScript in Vite.
+This is a desktop application that integrates the [bpmn-js](https://bpmn.io/toolkit/bpmn-js/) library for modeling BPMN diagrams.
 
-## Recommended IDE Setup
+Features:
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).
+- load and save the BPMN source files
+- save diagram PNG
