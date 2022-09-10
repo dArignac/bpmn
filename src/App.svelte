@@ -10,7 +10,10 @@
   import BpmnModeler from "bpmn-js/lib/Modeler";
   import { Canvg, presets } from "canvg";
   import { onDestroy, onMount } from "svelte";
+  import { appWindow } from "@tauri-apps/api/window";
+  import { getName } from "@tauri-apps/api/app";
 
+  const appTitle = "BPMN Modeler";
   let container;
   let modeler;
   let canvas;
@@ -28,8 +31,17 @@
     modeler.destroy();
   });
 
-  // FIXME should be shown in app title
   let loadedFilePath = "";
+
+  async function setLoadedFilePath(filePath: string) {
+    loadedFilePath = filePath;
+    let title = appTitle;
+    if (filePath.length > 0) {
+      await appWindow.setTitle(`${appTitle} - ${filePath}`);
+    } else {
+      await appWindow.setTitle(title);
+    }
+  }
 
   async function saveBPMNFile(filePath: string) {
     try {
@@ -56,7 +68,7 @@
       });
       if (filePath !== null) {
         saveBPMNFile(filePath);
-        loadedFilePath = filePath;
+        await setLoadedFilePath(filePath);
       }
     } catch (err) {
       // FIXME error handling
@@ -101,7 +113,7 @@
       if (filePath !== null) {
         const fileContent = await readTextFile(filePath as string);
         await modeler.importXML(fileContent);
-        loadedFilePath = filePath as string;
+        await setLoadedFilePath(filePath as string);
       }
     } catch (err) {
       // FIXME error handling
@@ -111,7 +123,7 @@
 
   async function newDiagram() {
     modeler.createDiagram();
-    loadedFilePath = "";
+    await setLoadedFilePath("");
   }
 </script>
 
