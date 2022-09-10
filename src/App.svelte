@@ -28,15 +28,35 @@
     modeler.destroy();
   });
 
-  async function saveBPMN() {
+  // FIXME should be shown in app title
+  let loadedFilePath = "";
+
+  async function saveBPMNFile(filePath: string) {
     try {
       const { xml } = await modeler.saveXML({ format: true });
+      await writeTextFile(filePath, xml);
+      // FIXME success dialog
+    } catch (err) {
+      // FIXME error handling
+    }
+  }
+
+  async function saveBPMN() {
+    if (loadedFilePath.length > 0) {
+      saveBPMNFile(loadedFilePath);
+    } else {
+      saveAsBPMN();
+    }
+  }
+
+  async function saveAsBPMN() {
+    try {
       const filePath = await save({
-        filters: [{ name: "BPMN", extensions: ["bmpn"] }],
+        filters: [{ name: "BPMN", extensions: ["bpmn"] }],
       });
       if (filePath !== null) {
-        await writeTextFile(filePath, xml);
-        // FIXME success dialog
+        saveBPMNFile(filePath);
+        loadedFilePath = filePath;
       }
     } catch (err) {
       // FIXME error handling
@@ -81,19 +101,27 @@
       if (filePath !== null) {
         const fileContent = await readTextFile(filePath as string);
         await modeler.importXML(fileContent);
+        loadedFilePath = filePath as string;
       }
     } catch (err) {
       // FIXME error handling
       console.log(err);
     }
   }
+
+  async function newDiagram() {
+    modeler.createDiagram();
+    loadedFilePath = "";
+  }
 </script>
 
 <main class="main">
   <div class="toolbar">
-    <button on:click|stopPropagation|preventDefault={savePNG}>PNG</button>
-    <button on:click|stopPropagation|preventDefault={saveBPMN}>Save</button>
     <button on:click|stopPropagation|preventDefault={loadBPMN}>Load</button>
+    <button on:click|stopPropagation|preventDefault={saveBPMN}>Save</button>
+    <button on:click|stopPropagation|preventDefault={saveAsBPMN}>SaveAs</button>
+    <button on:click|stopPropagation|preventDefault={savePNG}>PNG</button>
+    <button on:click|stopPropagation|preventDefault={newDiagram}>New</button>
   </div>
   <div class="modeler" bind:this={container} />
 </main>
@@ -102,16 +130,16 @@
 <style>
   .toolbar {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column;
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: 2px;
+    top: 2px;
     z-index: 1000;
   }
   .toolbar button {
     height: 25px;
     margin: 0 2px 0 0;
-    width: 50px;
+    width: 60px;
   }
   .modeler {
     height: 100vh;
