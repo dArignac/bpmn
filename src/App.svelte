@@ -13,6 +13,11 @@
   import { onDestroy, onMount } from "svelte";
   import Error from "./lib/Error.svelte";
   import { errorMessage } from "./store";
+  import iconFolderOpen from "./assets/folder_open.svg";
+  import iconSave from "./assets/save.svg";
+  import iconSaveAs from "./assets/save_as.svg";
+  import iconNew from "./assets/restart_alt.svg";
+  import iconPNG from "./assets/image.svg";
 
   const appTitle = "BPMN Modeler";
   let container;
@@ -128,13 +133,23 @@
   }
 </script>
 
-<main class="main">
+<main>
   <div class="toolbar">
-    <button on:click|stopPropagation|preventDefault={loadBPMN}>Load</button>
-    <button on:click|stopPropagation|preventDefault={saveBPMN}>Save</button>
-    <button on:click|stopPropagation|preventDefault={saveAsBPMN}>SaveAs</button>
-    <button on:click|stopPropagation|preventDefault={savePNG}>PNG</button>
-    <button on:click|stopPropagation|preventDefault={newDiagram}>New</button>
+    <button on:click|stopPropagation|preventDefault={loadBPMN}
+      ><img src={iconFolderOpen} alt="Open BPMN file" /></button
+    >
+    <button on:click|stopPropagation|preventDefault={saveBPMN}
+      ><img src={iconSave} alt="Save BPMN file" /></button
+    >
+    <button on:click|stopPropagation|preventDefault={saveAsBPMN}
+      ><img src={iconSaveAs} alt="Save BPMN file as" /></button
+    >
+    <button on:click|stopPropagation|preventDefault={savePNG}
+      ><img src={iconPNG} alt="Save PNG" /></button
+    >
+    <button on:click|stopPropagation|preventDefault={newDiagram}
+      ><img src={iconNew} alt="Create new diagram" /></button
+    >
   </div>
   <Error />
   <div class="modeler" bind:this={container} />
@@ -151,12 +166,24 @@
     z-index: 1000;
   }
   .toolbar button {
-    height: 25px;
-    margin: 0 2px 0 0;
-    width: 60px;
+    background: none;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    height: 30px;
+    margin: 0 2px 2px 0;
+    padding: 1px;
+    width: 30px;
+  }
+  .toolbar button img {
+    height: 100%;
+    width: 100%;
   }
   .modeler {
     height: 100vh;
     min-height: 100vh;
+  }
+  canvas {
+    height: 0;
+    width: 0;
   }
 </style>
