@@ -133,7 +133,7 @@
   }
 </script>
 
-<main class="main">
+<main>
   <div class="toolbar">
     <button on:click|stopPropagation|preventDefault={loadBPMN}
       ><img src={iconFolderOpen} alt="Open BPMN file" /></button
@@ -181,5 +181,9 @@
   .modeler {
     height: 100vh;
     min-height: 100vh;
+  }
+  canvas {
+    height: 0;
+    width: 0;
   }
 </style>
