@@ -1,6 +1,6 @@
 [package]
 name = "bpmn-modeler"
-version = "1.0.0"
+version = "1.0.1"
 description = "An app wrapping bpmn-js for convenience."
 authors = ["you"]
 license = ""
