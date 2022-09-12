@@ -166,7 +166,7 @@
     z-index: 1000;
   }
   .toolbar button {
-    background: none;
+    background: #fff;
     border: 1px solid #ccc;
     cursor: pointer;
     height: 30px;
