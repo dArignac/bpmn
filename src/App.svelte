@@ -27,8 +27,8 @@
   onMount(async () => {
     modeler = new BpmnModeler({
       container: container,
-      // FIXME check keyboard bindings
-      // keyboard: { bindInfo: document }
+      // @ts-ignore
+      keyboard: { bindTo: document },
     });
     modeler.createDiagram();
   });
