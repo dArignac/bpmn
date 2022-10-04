@@ -1,4 +1,4 @@
-name: Build and Upload Artifacts
+name: Build and Upload Artifacts for Linux
 
 # @semantic-release/github publishes the release as final step
 on:
@@ -6,22 +6,20 @@ on:
     types: [published]
 
 env:
-  NODE_VERSION: 16.17.0
+  NODE_VERSION: 16.17.1
 
 jobs:
 
-  # this builds the tauri binaries for the different OS
-  # it attaches them to the release/tag
-  tauri:
+  build:
+    name: Build release and uploap
 
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-
+    
     runs-on: ${{ matrix.os }}
 
     steps:
-
     - uses: actions/checkout@v3
       with:
         persist-credentials: false
@@ -63,6 +61,70 @@ jobs:
 
     - name: Bundle application
       run: npm run tauri build
+      env:
+        TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+        TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+
+    - name: Store signature as artifact
+      uses: actions/upload-artifact@v3
+      if: matrix.os == 'ubuntu-latest'
+      with:
+        name: release-signature-${{ runner.os }}-${{ github.ref_name }}
+        path: src-tauri/target/release/bundle/appimage/bpmn_*_amd64.AppImage.tar.gz.sig
+    
+    - name: Store signature as artifact
+      uses: actions/upload-artifact@v3
+      if: matrix.os == 'macos-latest'
+      with:
+        name: release-signature-${{ runner.os }}-${{ github.ref_name }}
+        path: src-tauri/target/release/bundle/macos/*.app.tar.gz.sig
+    
+    - name: Store signature as artifact
+      uses: actions/upload-artifact@v3
+      if: matrix.os == 'windows-latest'
+      with:
+        name: release-signature-${{ runner.os }}-${{ github.ref_name }}
+        path: src-tauri/target/release/bundle/msi/*.msi.zip.sig
 
     - name: Attach binary to tags
       run: node ci/attachBinariesToRelease.mjs ${{ secrets.PAT }} ${{ matrix.os }}
+  
+  update:
+    name: Update the Tauri updater file
+    runs-on: ubuntu-latest
+    needs: build
+
+    permissions:
+      contents: write
+
+    steps:
+    - name: Clone repo
+      uses: actions/checkout@v3
+      with:
+        ref: tauri-updates
+
+    - name: Download signature file for Linux
+      id: signature-linux
+      uses: actions/download-artifact@v3
+      with:
+        name: release-signature-Linux-${{ github.ref_name }}
+    
+    - name: Download signature file for MacOS
+      id: signature-macos
+      uses: actions/download-artifact@v3
+      with:
+        name: release-signature-macOS-${{ github.ref_name }}
+
+    - name: Download signature file for Windows
+      id: signature-windows
+      uses: actions/download-artifact@v3
+      with:
+        name: release-signature-Windows-${{ github.ref_name }}
+    
+    - name: Create update file
+      run: ./create-update.sh "${{ github.ref_name }}" ${{ steps.signature-linux.outputs.download-path }} ${{ steps.signature-macos.outputs.download-path }} ${{ steps.signature-windows.outputs.download-path }}
+
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "update for release ${{ github.ref_name }}"
+        file_pattern: "update.json"
