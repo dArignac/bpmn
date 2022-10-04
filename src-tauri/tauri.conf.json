@@ -13,6 +13,14 @@
   "tauri": {
     "allowlist": {
       "dialog": {
+        "all": false,
+        "ask": false,
+        "confirm": false,
+        "message": true,
+        "open": false,
+        "save": false
+      },
+      "notification": {
         "all": true
       },
       "fs": {
@@ -26,6 +34,12 @@
         "renameFile": false,
         "scope": [],
         "writeFile": true
+      },
+      "process": {
+        "all": false,
+        "exit": false,
+        "relaunch": true,
+        "relaunchDangerousAllowSymlinkMacos": false
       },
       "window": {
         "all": false,
@@ -92,7 +106,12 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": true,
+      "dialog": true,
+      "endpoints": [
+        "https://raw.githubusercontent.com/dArignac/bpmn/tauri-updates/update.json"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEMyMjIzRTYwQ0E5REIxMjYKUldRbXNaM0tZRDRpd2xuWkdienhOVlNvNHFsei9zeXpsSXQ3eWRhVVl1QW9SeFpFK3RkcFAvYjQK"
     },
     "windows": [
       {

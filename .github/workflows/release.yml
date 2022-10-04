@@ -1,10 +1,10 @@
-name: Test and Release
+name: Release
 
 on:
   push
 
 env:
-  NODE_VERSION: 16.17.0
+  NODE_VERSION: 16.17.1
 
 jobs:
 
@@ -77,7 +77,7 @@ jobs:
 
     # this will create a new Github release/tag if it was executed on the main branch
     # semantic-release checks the branch itself
-    - name: Release
+    - name: Semantic Release
       env:
         GITHUB_TOKEN: ${{ secrets.PAT }}
       run: npx semantic-release

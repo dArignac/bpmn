@@ -3,7 +3,7 @@ import * as fs from "fs";
 import { globby } from "globby";
 import * as path from "path";
 
-async function updateRelease(token, os) {
+async function updateRelease(token, target) {
   const options = { owner: context.repo.owner, repo: context.repo.repo };
   const github = getOctokit(token);
 
@@ -32,18 +32,23 @@ async function updateRelease(token, os) {
 
   // differentiate in which os we are to select the correct path
   let assets = [];
-  if (os === "ubuntu-latest") {
+  if (target === "ubuntu-latest") {
     assets = [
       "src-tauri/target/release/bundle/appimage/*_amd64.AppImage",
+      "src-tauri/target/release/bundle/appimage/*_amd64.AppImage.tar.gz",
       "src-tauri/target/release/bundle/deb/*_amd64.deb",
     ];
-  } else if (os === "macos-latest") {
+  } else if (target === "macos-latest") {
     assets = [
       "src-tauri/target/release/bundle/macos/*.app",
+      "src-tauri/target/release/bundle/macos/*.app.tar.gz",
       "src-tauri/target/release/bundle/dmg/*_x64.dmg",
     ];
-  } else if (os === "windows-latest") {
-    assets = ["src-tauri/target/release/bundle/msi/*.msi"];
+  } else if (target === "windows-latest") {
+    assets = [
+      "src-tauri/target/release/bundle/msi/*.msi",
+      "src-tauri/target/release/bundle/msi/*.msi.zip",
+    ];
   }
 
   const files = await globby(assets);
