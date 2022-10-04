@@ -70,7 +70,7 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       with:
         name: release-signature-${{ runner.os }}-${{ github.ref_name }}
-        path: src-tauri/target/release/bundle/appimage/bpmn_*_amd64.AppImage.tar.gz.sig
+        path: src-tauri/target/release/bundle/appimage/bpmn-modeler_*_amd64.AppImage.tar.gz.sig
     
     - name: Store signature as artifact
       uses: actions/upload-artifact@v3
