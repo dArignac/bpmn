@@ -13,12 +13,7 @@
   "tauri": {
     "allowlist": {
       "dialog": {
-        "all": false,
-        "ask": false,
-        "confirm": false,
-        "message": true,
-        "open": false,
-        "save": false
+        "all": true
       },
       "notification": {
         "all": true
