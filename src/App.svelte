@@ -71,6 +71,7 @@
     try {
       const filePath = await save({
         filters: [{ name: "BPMN", extensions: ["bpmn"] }],
+        defaultPath: loadedFilePath.length > 0 ? loadedFilePath : "",
       });
       if (filePath !== null) {
         saveBPMNFile(filePath);
@@ -86,6 +87,7 @@
     try {
       const filePath = await save({
         filters: [{ name: "PNG", extensions: ["png"] }],
+        defaultPath: loadedFilePath.replace(".bpmn", ".png"),
       });
       if (filePath !== null) {
         const { svg } = await modeler.saveSVG();
