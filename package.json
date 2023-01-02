@@ -11,8 +11,8 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@tauri-apps/api": "^1.1.0",
-    "bpmn-js": "^9.4.1",
+    "@tauri-apps/api": "^1.2.0",
+    "bpmn-js": "^11.1.0",
     "canvg": "^4.0.1"
   },
   "devDependencies": {
@@ -21,7 +21,7 @@
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@sveltejs/vite-plugin-svelte": "^1.0.1",
-    "@tauri-apps/cli": "^1.1.1",
+    "@tauri-apps/cli": "^1.2.2",
     "@tsconfig/svelte": "^3.0.0",
     "@types/node": "^18.7.10",
     "globby": "^13.1.2",
