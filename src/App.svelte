@@ -135,20 +135,24 @@
 
 <main>
   <div class="toolbar">
-    <button on:click|stopPropagation|preventDefault={loadBPMN}
-      ><img src={iconFolderOpen} alt="Open BPMN file" /></button
+    <button
+      on:click|stopPropagation|preventDefault={loadBPMN}
+      title="Open BPMN file"
+      ><img src={iconFolderOpen} alt="Open file" /></button
     >
-    <button on:click|stopPropagation|preventDefault={saveBPMN}
-      ><img src={iconSave} alt="Save BPMN file" /></button
+    <button on:click|stopPropagation|preventDefault={saveBPMN} title="Save file"
+      ><img src={iconSave} alt="Save file" /></button
     >
-    <button on:click|stopPropagation|preventDefault={saveAsBPMN}
-      ><img src={iconSaveAs} alt="Save BPMN file as" /></button
+    <button
+      on:click|stopPropagation|preventDefault={saveAsBPMN}
+      title="Save file as"><img src={iconSaveAs} alt="Save file as" /></button
     >
-    <button on:click|stopPropagation|preventDefault={savePNG}
+    <button on:click|stopPropagation|preventDefault={savePNG} title="Save PNG"
       ><img src={iconPNG} alt="Save PNG" /></button
     >
-    <button on:click|stopPropagation|preventDefault={newDiagram}
-      ><img src={iconNew} alt="Create new diagram" /></button
+    <button
+      on:click|stopPropagation|preventDefault={newDiagram}
+      title="New diagram"><img src={iconNew} alt="New diagram" /></button
     >
   </div>
   <Error />
