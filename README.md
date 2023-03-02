@@ -6,6 +6,6 @@ Features:
 
 - load and save the BPMN source files
 - model BPMN with the capabilities of bpmn-js
-- save diagram PNG
+- save diagram as PNG
 
 Find the variant for your operating system under [releases](https://github.com/dArignac/bpmn/releases).
