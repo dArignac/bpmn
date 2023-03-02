@@ -1,19 +1,19 @@
 {
-  "version": "1.2.5",
+  "version": "1.2.6",
   "notes": "n/a",
-  "pub_date": "2023-02-05T08:11:56Z",
+  "pub_date": "2023-03-02T10:42:42Z",
   "platforms": {
     "darwin-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbXNaM0tZRDRpd2xPNnVVWEFMVyt6eGd6bFE2SXU1ZVVVeHhKUjNkT2Nwa1FaMDY0UXpjMzNwc0JPQlllWU02WVl1TnpUSU0yWjV1VmRybC9XUE5QYk1FMm1zZStDZGdrPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjc1NTg0NDc5CWZpbGU6YnBtbi1tb2RlbGVyLmFwcC50YXIuZ3oKRFhqMzNhTUNhaEpIdlRrd0p4eXcyZ0thalFBeTRFUW9MQ2Z3YkttekZTYjVsMGFnNnlEYXRGclM0dGFVaHBsNmFVZ2QvM1J1MTQ4QWpDREV0Y2RDQ2c9PQo=",
-      "url": "https://github.com/dArignac/bpmn/releases/download/v1.2.5/bpmn-modeler.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbXNaM0tZRDRpd21qYTcwaXJ4cDRwcDBFVll4eWN4RWdsZ2pCZ2tMSmJqK1Q3N3ZJWmIrbXJUQ0pnSlNHenBPRGJER2NMWTUzbkkvaFowRFhxdW1Rc0FaeEQwL0MvOEE4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjc3NzUzMzAwCWZpbGU6YnBtbi1tb2RlbGVyLmFwcC50YXIuZ3oKa3RyZ2hhZVZSY1FaOU9Rb2Y4YWVLLzFabEZteGIzRGxmR1hEcU9qWE8vQkh6UGxRMVhYVEpyY2RQTEV2VVMvTSs3UlZZNTNQeFNxY0tkUjdWSGh3Qmc9PQo=",
+      "url": "https://github.com/dArignac/bpmn/releases/download/v1.2.6/bpmn-modeler.app.tar.gz"
     },
     "linux-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbXNaM0tZRDRpd3VSd0NRY2Yyb2Y3WEJkeHNFUmlXWlFIejc3SFJMSFdZWTBTWGhzRHZOY3poamJTUnR1dXRhUVlYWWsrRUMxdWtYZm9wRkhMY3NYSndha0t6KzRQL3dRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjc1NTg0NTE2CWZpbGU6YnBtbi1tb2RlbGVyXzEuMi41X2FtZDY0LkFwcEltYWdlLnRhci5nego3UTJvKyt3dndnc0tGSHpRdzd4RmpPZlYzS21wb09Kd2ZUYkNycW54Z1I3YVVob0RmQjJLN1NvQ2lNRlJ4dmNKVFJCdkRuU0NSOUpoeE9WeE9QMWxCQT09Cg==",
-      "url": "https://github.com/dArignac/bpmn/releases/download/v1.2.5/bpmn-modeler_1.2.5_amd64.AppImage.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbXNaM0tZRDRpd2t2SjdoYTZaNWF5WEhQVUFQR0xYZTBrVlpxSkZSVEpIc2RpV0pvVlgvZUR6a1prdlRrTldoU2FxcGo1ZGRHYnI1YUF6T1UxV1AxVzNNMHhSeW13eFFRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjc3NzUzNDE5CWZpbGU6YnBtbi1tb2RlbGVyXzEuMi42X2FtZDY0LkFwcEltYWdlLnRhci5negppaFQyQ3FRUW80R1h6b1JMeXkyTnZLM2d3bUFoZFZ5cWE0QmZyZ2Q4T2hCUFRlb3RUcU1kNnlpRkhqK0NBZWxCc08ycHhyaWU2T2pzeGxBNmVmQWFDUT09Cg==",
+      "url": "https://github.com/dArignac/bpmn/releases/download/v1.2.6/bpmn-modeler_1.2.6_amd64.AppImage.tar.gz"
     },
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbXNaM0tZRDRpd3Nxczk2bkpZVlRNWjRtcC9jNENjQW9NcWMzWEo3aDg2cmt6NGNrUjdyQk0wbjJWekFUK2hwRmVoVFF6eUJib2RyY3oyejBFdDJkOHZ5WDhuNVZjSHdBPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjc1NTg0NjgxCWZpbGU6YnBtbi1tb2RlbGVyXzEuMi41X3g2NF9lbi1VUy5tc2kuemlwCmxKYzhrOVZreWdYa1FuS2ZjeHZhZHlnQjFQS2Q4UUpyc1VVTTgrblQySkp3Um9tYnR6c2RNdjNNTnZuNGxybGlkY1ZMU2U0VnFuSzE2R2FsZVNjNENBPT0K",
-      "url": "https://github.com/dArignac/bpmn/releases/download/v1.2.5/bpmn-modeler_1.2.5_x64_en-US.msi.zip"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbXNaM0tZRDRpd3ZqdFFrSGd5S2xzQVllMjN5VkNSbXVYcEo4NG1FdFBPU29OaStZSTlaVkVEVFJxRVU4S3kxalRxYU9qTG9tTndIb0VKdkdXK25jSWNMdklXYVNrcHdVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjc3NzUzNzIxCWZpbGU6YnBtbi1tb2RlbGVyXzEuMi42X3g2NF9lbi1VUy5tc2kuemlwCjkxdlVCdUtsVXhqbEM4ZFZnS3pYV0pWSkIwZ21wdWNjTTQxaWNyS0tMN0J6a20xUEdaSFFCU0d6dWpraEVWUVhQRlFRZ3U2M1p1dzNpQkIwTjdmSEFBPT0K",
+      "url": "https://github.com/dArignac/bpmn/releases/download/v1.2.6/bpmn-modeler_1.2.6_x64_en-US.msi.zip"
     }
   }
 }
