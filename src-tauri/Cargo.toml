@@ -1,0 +1,23 @@
+[package]
+name = "bpmn-modeler"
+version = "1.2.6"
+description = "An app wrapping bpmn-js for convenience."
+authors = ["Alexander Herrmann"]
+license = ""
+repository = ""
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1.2", features = [] }
+
+[dependencies]
+tauri = { version = "1.2", features = ["dialog-all", "fs-read-dir", "fs-read-file", "fs-write-file", "notification-all", "process-relaunch", "updater", "window-set-title"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[features]
+# this feature is used for production builds or when `devPath` points to the filesystem
+# DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"]

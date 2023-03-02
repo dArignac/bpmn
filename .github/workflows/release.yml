@@ -1,0 +1,79 @@
+name: Release
+
+on: push
+
+env:
+  NODE_VERSION: 18.14.2
+
+jobs:
+  # this installs the React dependencies, runs the tests (if there were any) and creates a new release/tag on Github if on main branch
+  # creating the tauri binaries for the release happens in the tauri job
+  build:
+    # as long as the tests are not OS specific we just run it on ubuntu
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: node-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: yarn
+
+  release:
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    # only run on main (=release) branch
+    if: |
+      startsWith(github.ref, 'refs/heads/main')
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: node-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: yarn
+
+      # this will create a new Github release/tag if it was executed on the main branch
+      # semantic-release checks the branch itself
+      - name: Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+        run: yarn run semantic-release
