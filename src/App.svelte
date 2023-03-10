@@ -61,20 +61,23 @@
 
   async function saveBPMN() {
     if (loadedFilePath.length > 0) {
-      saveBPMNFile(loadedFilePath);
+      await saveBPMNFile(loadedFilePath);
     } else {
-      saveAsBPMN();
+      await saveAsBPMN();
     }
   }
 
   async function saveAsBPMN() {
+    let props: any = {
+      filters: [{ name: "BPMN", extensions: ["bpmn"] }],
+    };
+    if (loadedFilePath.length > 0) {
+      props = { defaultPath: loadedFilePath, ...props };
+    }
     try {
-      const filePath = await save({
-        filters: [{ name: "BPMN", extensions: ["bpmn"] }],
-        defaultPath: loadedFilePath.length > 0 ? loadedFilePath : "",
-      });
+      const filePath = await save(props);
       if (filePath !== null) {
-        saveBPMNFile(filePath);
+        await saveBPMNFile(filePath);
         await setLoadedFilePath(filePath);
       }
     } catch (err) {
