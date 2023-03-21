@@ -18,13 +18,16 @@
   import iconSaveAs from "./assets/save_as.svg";
   import iconNew from "./assets/restart_alt.svg";
   import iconPNG from "./assets/image.svg";
+  import { getVersion } from "@tauri-apps/api/app";
 
   const appTitle = "BPMN Modeler";
   let container;
   let modeler;
   let canvas;
+  let version = "unknown";
 
   onMount(async () => {
+    version = await getVersion();
     modeler = new BpmnModeler({
       container: container,
       // @ts-ignore
@@ -161,11 +164,19 @@
     >
   </div>
   <Error />
+  <div class="version">Version {version}</div>
   <div class="modeler" bind:this={container} />
 </main>
 <canvas bind:this={canvas} />
 
 <style>
+  .version {
+    position: absolute;
+    font-size: 10px;
+    bottom: 0;
+    left: 50%;
+    z-index: 1000;
+  }
   .action-toolbar {
     display: flex;
     flex-direction: column;
