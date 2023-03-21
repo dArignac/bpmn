@@ -19,12 +19,26 @@
   import iconNew from "./assets/restart_alt.svg";
   import iconPNG from "./assets/image.svg";
   import { getVersion } from "@tauri-apps/api/app";
+  import { SvelteToast } from "@zerodevx/svelte-toast";
+  import { toast } from "@zerodevx/svelte-toast";
 
   const appTitle = "BPMN Modeler";
   let container;
   let modeler;
   let canvas;
   let version = "unknown";
+
+  const options = { reversed: true, duration: 2000 };
+
+  function savedSuccessfulNotification() {
+    toast.push("Saved", {
+      theme: {
+        "--toastColor": "mintcream",
+        "--toastBackground": "rgba(72,187,120,0.9)",
+        "--toastBarBackground": "#2F855A",
+      },
+    });
+  }
 
   onMount(async () => {
     version = await getVersion();
@@ -52,10 +66,13 @@
     }
   }
 
-  async function saveBPMNFile(filePath: string) {
+  async function saveBPMNFile(filePath: string, notify: boolean) {
     try {
       const { xml } = await modeler.saveXML({ format: true });
       await writeTextFile(filePath, xml);
+      if (notify) {
+        savedSuccessfulNotification();
+      }
     } catch (err) {
       console.log(err);
       errorMessage.update((m) => err);
@@ -64,7 +81,7 @@
 
   async function saveBPMN() {
     if (loadedFilePath.length > 0) {
-      await saveBPMNFile(loadedFilePath);
+      await saveBPMNFile(loadedFilePath, true);
     } else {
       await saveAsBPMN();
     }
@@ -80,9 +97,10 @@
     try {
       const filePath = await save(props);
       if (filePath !== null) {
-        await saveBPMNFile(filePath);
+        await saveBPMNFile(filePath, false);
         await setLoadedFilePath(filePath);
       }
+      savedSuccessfulNotification();
     } catch (err) {
       console.log(err);
       errorMessage.update((m) => err);
@@ -141,6 +159,7 @@
   }
 </script>
 
+<SvelteToast {options} />
 <main>
   <div class="action-toolbar">
     <button
@@ -170,6 +189,13 @@
 <canvas bind:this={canvas} />
 
 <style>
+  :root {
+    --toastContainerTop: auto;
+    --toastContainerRight: auto;
+    --toastContainerBottom: 2rem;
+    --toastContainerLeft: calc(50vw - 8rem);
+  }
+
   .version {
     position: absolute;
     font-size: 10px;
