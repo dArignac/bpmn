@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { getVersion } from "@tauri-apps/api/app";
   import { open, save } from "@tauri-apps/api/dialog";
   import {
     readTextFile,
@@ -6,21 +7,19 @@
     writeTextFile,
   } from "@tauri-apps/api/fs";
   import { appWindow } from "@tauri-apps/api/window";
+  import { SvelteToast, toast } from "@zerodevx/svelte-toast";
   import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
   import "bpmn-js/dist/assets/diagram-js.css";
   import BpmnModeler from "bpmn-js/lib/Modeler";
   import { Canvg, presets } from "canvg";
   import { onDestroy, onMount } from "svelte";
-  import Error from "./lib/Error.svelte";
-  import { errorMessage } from "./store";
   import iconFolderOpen from "./assets/folder_open.svg";
+  import iconPNG from "./assets/image.svg";
+  import iconNew from "./assets/restart_alt.svg";
   import iconSave from "./assets/save.svg";
   import iconSaveAs from "./assets/save_as.svg";
-  import iconNew from "./assets/restart_alt.svg";
-  import iconPNG from "./assets/image.svg";
-  import { getVersion } from "@tauri-apps/api/app";
-  import { SvelteToast } from "@zerodevx/svelte-toast";
-  import { toast } from "@zerodevx/svelte-toast";
+  import Error from "./lib/Error.svelte";
+  import { errorMessage } from "./store";
 
   const appTitle = "BPMN Modeler";
   let container;
@@ -31,11 +30,21 @@
   const options = { reversed: true, duration: 2000 };
 
   function savedSuccessfulNotification() {
-    toast.push("Saved", {
+    toast.push("File was saved.", {
       theme: {
         "--toastColor": "mintcream",
         "--toastBackground": "rgba(72,187,120,0.9)",
         "--toastBarBackground": "#2F855A",
+      },
+    });
+  }
+
+  function savedErrorNotification() {
+    toast.push("Error saving file :-(", {
+      theme: {
+        "--toastColor": "white",
+        "--toastBackground": "rgba(150,0,0,0.9)",
+        "--toastBarBackground": "#f00000",
       },
     });
   }
@@ -74,6 +83,7 @@
         savedSuccessfulNotification();
       }
     } catch (err) {
+      savedErrorNotification();
       console.log(err);
       errorMessage.update((m) => err);
     }
@@ -102,6 +112,7 @@
       }
       savedSuccessfulNotification();
     } catch (err) {
+      savedErrorNotification();
       console.log(err);
       errorMessage.update((m) => err);
     }
@@ -123,9 +134,11 @@
         canvas.toBlob(async (blob) => {
           const content = await blob.arrayBuffer();
           await writeBinaryFile(filePath, content);
+          savedSuccessfulNotification();
         });
       }
     } catch (err) {
+      savedErrorNotification();
       console.log(err);
       errorMessage.update((m) => err);
     }
@@ -160,6 +173,7 @@
 </script>
 
 <SvelteToast {options} />
+<button on:click={savedErrorNotification}>Test</button>
 <main>
   <div class="action-toolbar">
     <button
