@@ -173,7 +173,6 @@
 </script>
 
 <SvelteToast {options} />
-<button on:click={savedErrorNotification}>Test</button>
 <main>
   <div class="action-toolbar">
     <button
