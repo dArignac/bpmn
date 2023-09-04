@@ -2,9 +2,6 @@ name: Release
 
 on: push
 
-env:
-  NODE_VERSION: 18.14.2
-
 jobs:
   # this installs the React dependencies, runs the tests (if there were any) and creates a new release/tag on Github if on main branch
   # creating the tauri binaries for the release happens in the tauri job
@@ -24,7 +21,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: ".nvmrc"
 
       - name: Cache node_modules
         uses: actions/cache@v3
@@ -56,7 +53,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: ".nvmrc"
 
       - name: Cache node_modules
         uses: actions/cache@v3
