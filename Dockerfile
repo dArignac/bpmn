@@ -1,8 +1,14 @@
 FROM ubuntu:latest
 
 RUN apt-get update && \
-    apt-get install -y curl gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu && \
+    apt-get install -y curl ca-certificates gnupg gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu && \
     rm -rf /var/lib/apt/lists/*
+
+# Node via https://deb.nodesource.com/
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && \
+    apt-get install nodejs -y
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
@@ -10,7 +16,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 # rustup target add armv7-unknown-linux-gnueabihf
 # rustup target add aarch64-unknown-linux-gnu
 RUN /root/.cargo/bin/rustup target add armv7-unknown-linux-gnueabihf
-RUN /root/.cargo/bin/rustup target add aarch64-unknown-linux-gnu
+# RUN /root/.cargo/bin/rustup target add aarch64-unknown-linux-gnu
 
 # - install a linker for arm:
 # sudo apt install gcc-arm-linux-gnueabihf
@@ -54,12 +60,19 @@ RUN apt-get update
 # - install webkitgtk
 # sudo apt install libwebkit2gtk-4.0-dev:armhf
 # sudo apt install libwebkit2gtk-4.0-dev:arm64
-# RUN apt-get install libwebkit2gtk-4.0-dev:armhf libwebkit2gtk-4.0-dev:arm64
+RUN apt-get install -y libwebkit2gtk-4.0-dev:armhf
 
 # - tell pkgconfig where it can find the libs for that arch
 # export PKG_CONFIG_SYSROOT_DIR=/usr/arm-linux-gnueabihf/
 # export PKG_CONFIG_SYSROOT_DIR=/usr/aarch64-linux-gnu/
+ENV PKG_CONFIG_SYSROOT_DIR=/usr/arm-linux-gnueabihf/
+
+RUN corepack enable
 
 # - build the app
 # tauri build --target armv7-unknown-linux-gnueabihf
 # tauri build --target aarch64-unknown-linux-gnu
+RUN mkdir /app
+WORKDIR /app
+
+# docker run --rm -v $(pwd):/app -t tauri-builder bash -c "yarn tauri build --target armv7-unknown-linux-gnueabihf"
