@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 RUN apt-get update && \
-    apt-get install -y curl ca-certificates gnupg gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu && \
+    apt-get install -y build-essential curl pkg-config ca-certificates gnupg gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu && \
     rm -rf /var/lib/apt/lists/*
 
 # Node via https://deb.nodesource.com/
@@ -60,7 +60,7 @@ RUN apt-get update
 # - install webkitgtk
 # sudo apt install libwebkit2gtk-4.0-dev:armhf
 # sudo apt install libwebkit2gtk-4.0-dev:arm64
-RUN apt-get install -y libwebkit2gtk-4.0-dev:armhf
+RUN apt-get install -y libwebkit2gtk-4.0-dev:armhf pkg-config:armhf libssl-dev:armhf
 
 # - tell pkgconfig where it can find the libs for that arch
 # export PKG_CONFIG_SYSROOT_DIR=/usr/arm-linux-gnueabihf/
@@ -68,6 +68,8 @@ RUN apt-get install -y libwebkit2gtk-4.0-dev:armhf
 ENV PKG_CONFIG_SYSROOT_DIR=/usr/arm-linux-gnueabihf/
 
 RUN corepack enable
+
+ENV PATH="${PATH}:/root/.cargo/bin"
 
 # - build the app
 # tauri build --target armv7-unknown-linux-gnueabihf
