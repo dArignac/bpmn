@@ -26,6 +26,9 @@ RUN /root/.cargo/bin/rustup target add armv7-unknown-linux-gnueabihf
 # - configure the linker in <projectroot>/.cargo/config.toml
 # [target.armv7-unknown-linux-gnueabihf]
 # linker = "arm-linux-gnueabihf-gcc"
+RUN mkdir /.cargo
+RUN echo "[target.armv7-unknown-linux-gnueabihf]" > /.cargo/config.toml
+RUN echo "linker = \"arm-linux-gnueabihf-gcc\"" >> /.cargo/config.toml
 
 # [target.aarch64-unknown-linux-gnu]
 # linker = "gcc-aarch64-linux-gnu"
@@ -60,7 +63,13 @@ RUN apt-get update
 # - install webkitgtk
 # sudo apt install libwebkit2gtk-4.0-dev:armhf
 # sudo apt install libwebkit2gtk-4.0-dev:arm64
-RUN apt-get install -y libwebkit2gtk-4.0-dev:armhf pkg-config:armhf libssl-dev:armhf
+RUN apt-get install -y \
+    libwebkit2gtk-4.0-dev:armhf \
+    libssl-dev:armhf \
+    librust-atk-dev:armhf \
+    libglib2.0-dev:armhf \
+    libcairo2-dev:armhf \
+    libpango1.0-dev:armhf
 
 # - tell pkgconfig where it can find the libs for that arch
 # export PKG_CONFIG_SYSROOT_DIR=/usr/arm-linux-gnueabihf/
