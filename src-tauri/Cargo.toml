@@ -13,15 +13,8 @@ edition = "2021"
 tauri-build = { version = "1.4.0", features = [] }
 
 [dependencies]
-tauri = { version = "1.4.1", features = [
-    "dialog-all",
-    "fs-read-dir",
-    "fs-read-file",
-    "fs-write-file",
-    "notification-all",
-    "process-relaunch",
+tauri = { version = "1.4.1", features = [ "fs-read-dir", "dialog-all", "fs-read-file", "window-set-title", "process-relaunch", "notification-all", "fs-write-file",
     "updater",
-    "window-set-title",
 ] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
