@@ -9,7 +9,7 @@ jobs:
     # as long as the tests are not OS specific we just run it on ubuntu
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
 
