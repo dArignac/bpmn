@@ -14,7 +14,7 @@
   "dependencies": {
     "@tauri-apps/api": "^1.4.0",
     "@zerodevx/svelte-toast": "^0.9.2",
-    "bpmn-js": "^11.5.0",
+    "bpmn-js": "^15.2.2",
     "canvg": "^4.0.1"
   },
   "devDependencies": {
@@ -64,5 +64,5 @@
       "@semantic-release/github"
     ]
   },
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "yarn@4.0.2"
 }
