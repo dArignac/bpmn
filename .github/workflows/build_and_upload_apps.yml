@@ -93,8 +93,9 @@ jobs:
           name: release-signature-${{ runner.os }}-${{ github.ref_name }}
           path: src-tauri/target/release/bundle/msi/*.msi.zip.sig
 
-      - name: Attach binary to tags
-        run: node ci/attachBinariesToRelease.mjs ${{ secrets.PAT }} ${{ matrix.os }}
+      # seems like the action already does that for us :-D
+      # - name: Attach binary to tags
+      #   run: node ci/attachBinariesToRelease.mjs ${{ secrets.PAT }} ${{ matrix.os }}
 
   update:
     name: Update the Tauri updater file
