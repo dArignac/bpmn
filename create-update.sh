@@ -29,7 +29,7 @@ tee update.json <<EOF
     "darwin-x86_64": {
       "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTbWhzc0ZBSTJVckQ1V2MzM3BuWTBMZklqSUF0WkZLNVJnRTdxcGVVajNRVkZnVDc5cENvZTRQazFQU21uL3l1MDg2VEM1ZHA2RzhhcWZCZzZzUzNpMzczMDZyRko1SWc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjkzODUxMjUyCWZpbGU6YnBtbi1tb2RlbGVyLmFwcC50YXIuZ3oKSmdKQSt0Vit1amVKbC9Na0RaUVZZY2toTld0VmdaaWNMMnd5YkN6QmtFNldHZTRSbkJFbWZKL05HNUdBWnp5QUtBdEUvenFkcmp2bU5aMVMzRldvRHc9PQo=",
       "url": "https://github.com/dArignac/bpmn/releases/download/v1.2.3/bpmn-modeler.app.tar.gz"
-    },
+    }
   }
 }
 EOF
