@@ -13,7 +13,7 @@ edition = "2021"
 tauri-build = { version = "1.5.1", features = [] }
 
 [dependencies]
-tauri = { version = "1.6.1", features = [
+tauri = { version = "1.6.1", features = [ "global-shortcut-all",
     "dialog-all",
     "fs-read-dir",
     "fs-read-file",

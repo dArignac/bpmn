@@ -6,6 +6,11 @@
     writeBinaryFile,
     writeTextFile,
   } from "@tauri-apps/api/fs";
+  import {
+    isRegistered,
+    register,
+    unregisterAll,
+  } from "@tauri-apps/api/globalShortcut";
   import { appWindow } from "@tauri-apps/api/window";
   import { SvelteToast, toast } from "@zerodevx/svelte-toast";
   import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
@@ -49,6 +54,18 @@
     });
   }
 
+  async function registerShortcuts() {
+    // Save
+    const x = await isRegistered("CommandOrControl+S");
+    if (!x) {
+      await register("CommandOrControl+S", async () => {
+        console.log("feuer");
+        await saveBPMN();
+        console.log("done");
+      });
+    }
+  }
+
   onMount(async () => {
     version = await getVersion();
     modeler = new BpmnModeler({
@@ -57,10 +74,12 @@
       keyboard: { bindTo: document },
     });
     modeler.createDiagram();
+    await registerShortcuts();
   });
 
-  onDestroy(() => {
+  onDestroy(async () => {
     modeler.destroy();
+    await unregisterAll();
   });
 
   let loadedFilePath = "";

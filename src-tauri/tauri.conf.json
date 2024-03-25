@@ -15,6 +15,9 @@
       "dialog": {
         "all": true
       },
+      "globalShortcut": {
+        "all": true
+      },
       "notification": {
         "all": true
       },
