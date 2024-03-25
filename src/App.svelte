@@ -22,9 +22,9 @@
   import { errorMessage } from "./store";
 
   const appTitle = "BPMN Modeler";
-  let container;
-  let modeler;
-  let canvas;
+  let container: HTMLDivElement;
+  let modeler: BpmnModeler;
+  let canvas: HTMLCanvasElement;
   let version = "unknown";
 
   const options = { reversed: true, duration: 2000 };
@@ -78,14 +78,19 @@
   async function saveBPMNFile(filePath: string, notify: boolean) {
     try {
       const { xml } = await modeler.saveXML({ format: true });
-      await writeTextFile(filePath, xml);
-      if (notify) {
-        savedSuccessfulNotification();
+      if (xml !== undefined) {
+        await writeTextFile(filePath, xml);
+        if (notify) {
+          savedSuccessfulNotification();
+        }
+      } else {
+        console.log("returned xml was empty");
+        savedErrorNotification();
       }
-    } catch (err) {
+    } catch (err: unknown) {
       savedErrorNotification();
       console.log(err);
-      errorMessage.update((m) => err);
+      errorMessage.update((m) => err as string);
     }
   }
 
@@ -114,7 +119,7 @@
     } catch (err) {
       savedErrorNotification();
       console.log(err);
-      errorMessage.update((m) => err);
+      errorMessage.update((m) => err as string);
     }
   }
 
@@ -128,19 +133,29 @@
         const { svg } = await modeler.saveSVG();
 
         const ctx = canvas.getContext("2d");
-        const v = await Canvg.from(ctx, svg, presets.offscreen());
-        await v.render();
+        if (ctx) {
+          const v = await Canvg.from(ctx, svg, presets.offscreen());
+          await v.render();
 
-        canvas.toBlob(async (blob) => {
-          const content = await blob.arrayBuffer();
-          await writeBinaryFile(filePath, content);
-          savedSuccessfulNotification();
-        });
+          canvas.toBlob(async (blob) => {
+            if (blob) {
+              const content = await blob.arrayBuffer();
+              await writeBinaryFile(filePath, content);
+              savedSuccessfulNotification();
+            } else {
+              console.log("Did not receive blob content");
+              savedErrorNotification();
+            }
+          });
+        } else {
+          console.log("Unable to get canvas context");
+          savedErrorNotification();
+        }
       }
     } catch (err) {
       savedErrorNotification();
       console.log(err);
-      errorMessage.update((m) => err);
+      errorMessage.update((m) => err as string);
     }
   }
 
@@ -162,7 +177,7 @@
       }
     } catch (err) {
       console.log(err);
-      errorMessage.update((m) => err);
+      errorMessage.update((m) => err as string);
     }
   }
 
