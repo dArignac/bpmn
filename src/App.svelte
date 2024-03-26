@@ -2,14 +2,12 @@
   import { getVersion } from "@tauri-apps/api/app";
   import { open, save } from "@tauri-apps/api/dialog";
   import {
-    readTextFile,
-    writeBinaryFile,
-    writeTextFile,
+      readTextFile,
+      writeBinaryFile,
+      writeTextFile,
   } from "@tauri-apps/api/fs";
   import {
-    isRegistered,
-    register,
-    unregisterAll,
+      unregisterAll
   } from "@tauri-apps/api/globalShortcut";
   import { appWindow } from "@tauri-apps/api/window";
   import { SvelteToast, toast } from "@zerodevx/svelte-toast";
@@ -25,6 +23,7 @@
   import iconSaveAs from "./assets/save_as.svg";
   import Error from "./lib/Error.svelte";
   import { errorMessage } from "./store";
+  import { shortcut, type ShortcutEventDetail } from '@svelte-put/shortcut';
 
   const appTitle = "BPMN Modeler";
   let container: HTMLDivElement;
@@ -54,18 +53,6 @@
     });
   }
 
-  async function registerShortcuts() {
-    // Save
-    const x = await isRegistered("CommandOrControl+S");
-    if (!x) {
-      await register("CommandOrControl+S", async () => {
-        console.log("feuer");
-        await saveBPMN();
-        console.log("done");
-      });
-    }
-  }
-
   onMount(async () => {
     version = await getVersion();
     modeler = new BpmnModeler({
@@ -74,7 +61,6 @@
       keyboard: { bindTo: document },
     });
     modeler.createDiagram();
-    await registerShortcuts();
   });
 
   onDestroy(async () => {
@@ -204,7 +190,20 @@
     modeler.createDiagram();
     await setLoadedFilePath("");
   }
+
+  async function saveThroughShortcut(detail: ShortcutEventDetail) {
+    await saveBPMN()
+  }
+
+  async function openThroughShortcut(detail: ShortcutEventDetail) {
+    await loadBPMN()
+  }
 </script>
+
+<svelte:window
+  use:shortcut={{ trigger: { key: 's', modifier: ['ctrl'], callback: saveThroughShortcut,}, }}
+  use:shortcut={{ trigger: { key: 'o', modifier: ['ctrl'], callback: openThroughShortcut,}, }}
+/>
 
 <SvelteToast {options} />
 <main>

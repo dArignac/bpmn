@@ -1233,6 +1233,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@svelte-put/shortcut@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@svelte-put/shortcut@npm:3.1.0"
+  checksum: 49f28f99c8f05cbf001a881fb6d1e4a956df7820b8c779108ce98d4b430737d322f044a191cc16ea2db46696a888c9351eda080620619e0c8577f77b4faa8b73
+  languageName: node
+  linkType: hard
+
 "@sveltejs/vite-plugin-svelte-inspector@npm:^2.0.0":
   version: 2.0.0
   resolution: "@sveltejs/vite-plugin-svelte-inspector@npm:2.0.0"
@@ -1976,6 +1983,7 @@ __metadata:
     "@google/semantic-release-replace-plugin": "npm:^1.2.7"
     "@semantic-release/exec": "npm:^6.0.3"
     "@semantic-release/git": "npm:^10.0.1"
+    "@svelte-put/shortcut": "npm:^3.1.0"
     "@sveltejs/vite-plugin-svelte": "npm:^3.0.2"
     "@tauri-apps/api": "npm:^1.5.3"
     "@tauri-apps/cli": "npm:^1.5.11"

@@ -15,12 +15,6 @@
       "dialog": {
         "all": true
       },
-      "globalShortcut": {
-        "all": true
-      },
-      "notification": {
-        "all": true
-      },
       "fs": {
         "all": false,
         "copyFile": false,
@@ -32,6 +26,9 @@
         "renameFile": false,
         "scope": [],
         "writeFile": true
+      },
+      "notification": {
+        "all": true
       },
       "process": {
         "all": false,
