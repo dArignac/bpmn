@@ -18,7 +18,7 @@
   import { onDestroy, onMount } from "svelte";
   import iconFolderOpen from "./assets/folder_open.svg";
   import iconPNG from "./assets/image.svg";
-  import iconNew from "./assets/restart_alt.svg";
+  import iconNew from "./assets/restart.svg";
   import iconSave from "./assets/save.svg";
   import iconSaveAs from "./assets/save_as.svg";
   import Error from "./lib/Error.svelte";
@@ -164,6 +164,23 @@
     }
   }
 
+  async function saveSVG() {
+    try {
+      const filePath = await save({
+        filters: [{ name: "SVG", extensions: ["SVG"] }],
+        defaultPath: loadedFilePath.replace(".bpmn", ".svg"),
+      });
+      if (filePath !== null) {
+        const { svg } = await modeler.saveSVG();
+  	    await writeTextFile(filePath.replace(".png", ".svg"), svg);
+      }
+    } catch (err) {
+      savedErrorNotification();
+      console.log(err);
+      errorMessage.update((m) => err as string);
+    }
+  }
+
   async function loadBPMN() {
     try {
       const filePath = await open({
@@ -223,6 +240,9 @@
     <button on:click|stopPropagation|preventDefault={savePNG} title="Save PNG"
       ><img src={iconPNG} alt="Save PNG" /></button
     >
+    <button on:click|stopPropagation|preventDefault={saveSVG} title="Save SVG"
+      ><img src={iconPNG} alt="Save SVG" /></button
+    >
     <button
       on:click|stopPropagation|preventDefault={newDiagram}
       title="New diagram"><img src={iconNew} alt="New diagram" /></button
@@ -261,10 +281,10 @@
     background: #fff;
     border: 1px solid #ccc;
     cursor: pointer;
-    height: 30px;
+    height: 32px;
     margin: 0 2px 2px 0;
     padding: 1px;
-    width: 30px;
+    width: 32px;
   }
   .action-toolbar button img {
     height: 100%;
