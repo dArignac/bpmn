@@ -1,14 +1,13 @@
 <script lang="ts">
+  import { shortcut, type ShortcutEventDetail } from "@svelte-put/shortcut";
+  import { invoke } from "@tauri-apps/api";
   import { getVersion } from "@tauri-apps/api/app";
   import { open, save } from "@tauri-apps/api/dialog";
   import {
-      readTextFile,
-      writeBinaryFile,
-      writeTextFile,
+    readTextFile,
+    writeBinaryFile,
+    writeTextFile,
   } from "@tauri-apps/api/fs";
-  import {
-      unregisterAll
-  } from "@tauri-apps/api/globalShortcut";
   import { appWindow } from "@tauri-apps/api/window";
   import { SvelteToast, toast } from "@zerodevx/svelte-toast";
   import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
@@ -23,7 +22,6 @@
   import iconSaveAs from "./assets/save_as.svg";
   import Error from "./lib/Error.svelte";
   import { errorMessage } from "./store";
-  import { shortcut, type ShortcutEventDetail } from '@svelte-put/shortcut';
 
   const appTitle = "BPMN Modeler";
   let container: HTMLDivElement;
@@ -54,6 +52,9 @@
   }
 
   onMount(async () => {
+    // FIXME load the file
+    const initialFile = await invoke("fetch_initial_source_file");
+
     version = await getVersion();
     modeler = new BpmnModeler({
       container: container,
@@ -65,7 +66,6 @@
 
   onDestroy(async () => {
     modeler.destroy();
-    await unregisterAll();
   });
 
   let loadedFilePath = "";
@@ -172,7 +172,7 @@
       });
       if (filePath !== null) {
         const { svg } = await modeler.saveSVG();
-  	    await writeTextFile(filePath.replace(".png", ".svg"), svg);
+        await writeTextFile(filePath.replace(".png", ".svg"), svg);
       }
     } catch (err) {
       savedErrorNotification();
@@ -181,6 +181,7 @@
     }
   }
 
+  // FIXME refactor the function
   async function loadBPMN() {
     try {
       const filePath = await open({
@@ -209,17 +210,21 @@
   }
 
   async function saveThroughShortcut(detail: ShortcutEventDetail) {
-    await saveBPMN()
+    await saveBPMN();
   }
 
   async function openThroughShortcut(detail: ShortcutEventDetail) {
-    await loadBPMN()
+    await loadBPMN();
   }
 </script>
 
 <svelte:window
-  use:shortcut={{ trigger: { key: 's', modifier: ['ctrl'], callback: saveThroughShortcut,}, }}
-  use:shortcut={{ trigger: { key: 'o', modifier: ['ctrl'], callback: openThroughShortcut,}, }}
+  use:shortcut={{
+    trigger: { key: "s", modifier: ["ctrl"], callback: saveThroughShortcut },
+  }}
+  use:shortcut={{
+    trigger: { key: "o", modifier: ["ctrl"], callback: openThroughShortcut },
+  }}
 />
 
 <SvelteToast {options} />
