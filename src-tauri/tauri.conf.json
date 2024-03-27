@@ -24,7 +24,7 @@
         "removeDir": false,
         "removeFile": false,
         "renameFile": false,
-        "scope": [],
+        "scope": ["**"],
         "writeFile": true
       },
       "notification": {

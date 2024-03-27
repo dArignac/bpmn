@@ -52,9 +52,6 @@
   }
 
   onMount(async () => {
-    // FIXME load the file
-    const initialFile = await invoke("fetch_initial_source_file");
-
     version = await getVersion();
     modeler = new BpmnModeler({
       container: container,
@@ -62,6 +59,13 @@
       keyboard: { bindTo: document },
     });
     modeler.createDiagram();
+
+    // get the loaded file if a BPMN file is opened with "Open with"
+    const initialFile: string = await invoke("fetch_initial_source_file");
+    console.log("initial file is", initialFile);
+    if (initialFile !== "none") {
+      setModelSource(initialFile);
+    }
   });
 
   onDestroy(async () => {
@@ -181,7 +185,6 @@
     }
   }
 
-  // FIXME refactor the function
   async function loadBPMN() {
     try {
       const filePath = await open({
@@ -194,14 +197,19 @@
         ],
       });
       if (filePath !== null) {
-        const fileContent = await readTextFile(filePath as string);
-        await modeler.importXML(fileContent);
-        await setLoadedFilePath(filePath as string);
+        setModelSource(filePath as string);
       }
     } catch (err) {
       console.log(err);
       errorMessage.update((m) => err as string);
     }
+  }
+
+  async function setModelSource(filePath: string) {
+    const fileContent = await readTextFile(filePath);
+    console.log("fileContent", fileContent);
+    await modeler.importXML(fileContent);
+    await setLoadedFilePath(filePath);
   }
 
   async function newDiagram() {
