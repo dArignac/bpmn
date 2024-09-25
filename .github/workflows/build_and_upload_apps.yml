@@ -16,18 +16,18 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           persist-credentials: false
           submodules: recursive
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
 
       - name: Cache node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: node-cache
         with:
           path: node_modules
@@ -73,21 +73,21 @@ jobs:
       #     TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
 
       - name: Store signature as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: matrix.os == 'ubuntu-latest'
         with:
           name: release-signature-${{ runner.os }}-${{ github.ref_name }}
           path: src-tauri/target/release/bundle/appimage/bpmn-modeler_*_amd64.AppImage.tar.gz.sig
 
       # - name: Store signature as artifact
-      #   uses: actions/upload-artifact@v3
+      #   uses: actions/upload-artifact@v4
       #   if: matrix.os == 'macos-latest'
       #   with:
       #     name: release-signature-${{ runner.os }}-${{ github.ref_name }}
       #     path: src-tauri/target/release/bundle/macos/*.app.tar.gz.sig
 
       - name: Store signature as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: matrix.os == 'windows-latest'
         with:
           name: release-signature-${{ runner.os }}-${{ github.ref_name }}
@@ -107,7 +107,7 @@ jobs:
 
     steps:
       - name: Clone repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: tauri-updates
 
