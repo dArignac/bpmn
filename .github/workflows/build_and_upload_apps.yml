@@ -113,19 +113,19 @@ jobs:
 
       - name: Download signature file for Linux
         id: signature-linux
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: release-signature-Linux-${{ github.ref_name }}
 
       # - name: Download signature file for MacOS
       #   id: signature-macos
-      #   uses: actions/download-artifact@v3
+      #   uses: actions/download-artifact@v4.1.7
       #   with:
       #     name: release-signature-macOS-${{ github.ref_name }}
 
       - name: Download signature file for Windows
         id: signature-windows
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: release-signature-Windows-${{ github.ref_name }}
 
