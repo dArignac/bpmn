@@ -1861,7 +1861,7 @@ __metadata:
     "@yarnpkg/sdks": "npm:^3.2.0"
     "@zerodevx/svelte-toast": "npm:^0.9.6"
     bpmn-js: "npm:^17.11.1"
-    canvg: "npm:^4.0.2"
+    canvg: "npm:^4.0.3"
     globby: "npm:^14.0.2"
     semantic-release: "npm:^23.1.1"
     svelte: "npm:^4.2.19"
@@ -1964,16 +1964,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"canvg@npm:^4.0.2":
-  version: 4.0.2
-  resolution: "canvg@npm:4.0.2"
+"canvg@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "canvg@npm:4.0.3"
   dependencies:
     "@types/raf": "npm:^3.4.0"
     raf: "npm:^3.4.1"
     rgbcolor: "npm:^1.0.1"
     stackblur-canvas: "npm:^2.0.0"
     svg-pathdata: "npm:^6.0.3"
-  checksum: a7af7bcf79ad6bf27b7eff68ecde5cb91eb8ad9626606598a8c528edba68f160ca3b8c0003fa58446f64fc012d8bff181a767171e95d4bc52e3cb4d02f12c739
+  checksum: e9313543d9350feb1dfca7a6759e9112474afa4c98c0c877e0075a8cdaed0ef9130e1ed057bf8e991a46760db314c62345f56c8cbd30f614ea2b70b5273fe901
   languageName: node
   linkType: hard
 
