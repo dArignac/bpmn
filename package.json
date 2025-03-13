@@ -16,7 +16,7 @@
     "@tauri-apps/api": "^1.6.0",
     "@zerodevx/svelte-toast": "^0.9.6",
     "bpmn-js": "^17.11.1",
-    "canvg": "^4.0.2"
+    "canvg": "^4.0.3"
   },
   "devDependencies": {
     "@actions/github": "^6.0.0",
